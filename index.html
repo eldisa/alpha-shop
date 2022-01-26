@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>ALPHA Shop</title>
+    <link rel="stylesheet" href="./dist/main.css">
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+<div id="app">
+    <div class="web-container" v-bind:theme="display_theme">
+        <!-- header -->
+        <header class="site-header">
+            <div class="header-container mx-auto">
+                <!-- navbar-toggle -->
+                <input class="navbar-toggle" id="navbar-toggle" type="checkbox">
+                <label class="burger-container" for="navbar-toggle">
+                    <i class="fas fa-bars"></i>
+                </label>
+                <!-- navbar-menu -->
+                <nav class="navbar-menu">
+                    <ul class="nav-list site-menu-list mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">男款</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">女款</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">最新消息</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">客製商品</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">聯絡我們</a>
+                        </li>
+                    </ul>
+                    <ul class="nav-list site-action-list">
+                        <!-- search -->
+                        <li class="nav-item">
+                            <i class="fas fa-search nav-icon"></i>
+                        </li><!-- cart -->
+                        <li class="nav-item">
+                            <i class="fas fa-cart-plus nav-icon"></i>
+                        </li>
+                        <li class="nav-item" id="theme-toggle" @click="toggleTheme">
+                            <i  v-if="display_theme==='dark'" class="far fa-moon nav-icon"></i>
+                            <i v-else class="fas fa-sun nav-icon"></i>
+                        </li>
+                    </ul>
+                </nav><!-- logo -->
+                <a class="header-logo-container" href="#">
+                    <img class="logo" src="./public/images/Logo@2x.png">
+                </a>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="site-main">
+            <div class="main-container">
+                <!-- register -->
+                <section class="register-container col col-lg-6 col-sm-12" v-bind:data-phase="status" data-total-price="0">
+                    <!-- register-title -->
+                    <h2 class="register-title col col-12">結帳</h2><!-- register-progress -->
+                    <section class="progress-container col col-12">
+                        <span class="progress-group" data-phase="address">
+                            <span class="progress-icon" v-bind:class="{done:status>1}">
+                                <i v-if="status>1" class="fas fa-check"></i>
+                                <span v-else class="text">1</span>
+                            </span>
+                            <span class="progress-label">寄送地址</span>
+                        </span>
+                        <span class="progress-bar" v-bind:class="{done:status>1}"></span>
+                        <span class="progress-group" data-phase="shipping">
+                            <span class="progress-icon">
+                                <i v-if="status>2" class="fas fa-check"></i>
+                                <span v-else class="text">2</span>
+                            </span>
+                            <span class="progress-label">運送方式</span>
+                        </span>
+                        <span class="progress-bar" v-bind:class="{done:status>2}"></span>
+                        <span class="progress-group" data-phase="credit-card">
+                            <span class="progress-icon" v-bind:class="{done:status>2}">
+                                <span class="text">3</span>
+                            </span>
+                            <span class="progress-label">付款資訊</span>
+                        </span>
+                    </section>
+                    <!-- register-form -->
+                    <section class="form-container col col-12">
+                        <!-- address phase -->
+                        <form class="col col-12" v-if="status==1">
+                            <h3 class="form-title">寄送地址</h3>
+                            <section class="form-body col col-12">
+                                <div class="col col-12">
+                                    <div class="input-group input-w-lg-2 input-w-sm-s1">
+                                        <div class="input-label">
+                                            稱謂
+                                        </div>
+                                        <div class="select-container">
+                                            <select>
+                                                <option selected value="mr">
+                                                    先生
+                                                </option>
+                                                <option value="ms">
+                                                    女士
+                                                </option>
+                                                <option value="mx">
+                                                    不明
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="input-group input-w-lg-4 input-w-sm-s2">
+                                        <div class="input-label">
+                                            姓名
+                                        </div>
+                                        <input placeholder="請輸入姓名" type="text">
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="input-group input-w-lg-3 input-w-sm-full">
+                                        <div class="input-label">
+                                            電話
+                                        </div>
+                                        <input placeholder="請輸入行動電話" type="tel">
+                                    </div>
+                                    <div class="input-group input-w-lg-3 input-w-sm-full">
+                                        <div class="input-label">
+                                            Email
+                                        </div>
+                                        <input placeholder="請輸入電子郵件" type="email">
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="input-group input-w-lg-2 input-w-sm-full">
+                                        <div class="input-label">
+                                            縣市
+                                        </div>
+                                        <div class="select-container">
+                                            <select required="">
+                                                <option v-for="city in city_list" value="{{city.code}}">{{city.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="input-group input-w-lg-4 input-w-sm-full">
+                                        <div class="input-label">
+                                            地址
+                                        </div>
+                                        <input placeholder="請輸入地址" type="text">
+                                    </div>
+                                </div>
+                            </section>
+                        </form><!-- shipping phase -->
+                        <form class="col col-12" v-if="status==2">
+                            <h3 class="form-title">運送方式</h3>
+                            <section class="form-body col col-12">
+                                <label v-for="(ship_fee,index) in ship_fee_list" class="radio-group col col-12">
+                                    <input type="radio" name="shipping" v-model="selected_ship_fee" :value="ship_fee.price">
+                                    <div class="radio-info">
+                                        <div class="col col-12">
+                                            <div class="text">{{ship_fee.name}}}</div>
+                                            <div class="price">{{ship_fee.price_text}}</div>
+                                        </div>
+                                        <div class="period col col-12">{{ship_fee.spend_time_text}}}</div>
+                                    </div>
+                                    <div class="radio-box-border"></div>
+                                </label>
+                            </section>
+                        </form><!-- credit-card phase -->
+                        <form class="col col-12" v-if="status==3">
+                            <h3 class="form-title">付款資訊</h3>
+                            <section class="form-body col col-12">
+                                <div class="col col-12">
+                                    <div class="input-group input-w-lg-4 input-w-sm-full">
+                                        <div class="input-label">
+                                            持卡人姓名
+                                        </div>
+                                        <input placeholder="John Doe" type="text">
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="input-group input-w-lg-4 input-w-sm-full">
+                                        <div class="input-label">
+                                            卡號
+                                        </div>
+                                        <input placeholder="1111 2222 3333 4444" type="text">
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="input-group input-w-lg-3 input-w-sm-s3">
+                                        <div class="input-label">
+                                            有效期限
+                                        </div>
+                                        <input placeholder="MM/YY" type="text">
+                                    </div>
+                                    <div class="input-group input-w-lg-3 input-w-sm-s3">
+                                        <div class="input-label">
+                                            CVC / CCV
+                                        </div>
+                                        <input placeholder="123" type="text">
+                                    </div>
+                                </div>
+                            </section>
+                        </form>
+                    </section>
+                </section>
+                <!-- cart -->
+                <section class="cart-container col col-lg-5 col-sm-12">
+                    <h3 class="cart-title">購物籃</h3>
+                    <section class="product-list col col-12" v-for="(item,index) in item_list">
+
+                        <div class="product-container col col-12">
+                            <img class="img-container" v-bind:src="item.image">
+                            <div class="product-info">
+                                <div class="product-name">
+                                    {{item.name}}
+                                </div>
+                                <div class="product-control-container">
+                                    <div class="product-control">
+                                        <i class="fas fa-minus product-action" @click="subtractItem(item.id)"></i>
+                                        <span class="product-count">{{cart[index]}}</span>
+                                        <i class="fas fa-plus product-action" @click="addItem(item.id)"></i>
+                                    </div>
+                                </div>
+                                <div class="price">$ {{item.price}}</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="cart-info shipping col col-12">
+                        <div class="text">
+                            運費
+                        </div>
+                        <div class="price">{{showShipFee}}</div>
+                    </section>
+                    <section class="cart-info total col col-12">
+                        <div class="text">
+                            小計
+                        </div>
+                        <div class="price">${{totalPrice}}</div>
+                    </section>
+                </section>
+                <!-- progress-control -->
+                <section class="progress-control-container col col-lg-6 col-sm-12">
+                    <section class="button-group col col-12" v-bind:data-phase="phase_list[status-1].name">
+                        <button v-if="phase_list[status-1].prev >0 " class="prev" @click="movePhase(-1)">
+                            <i class="far fa-arrow-left"></i>
+                              {{prev_text}}
+                        </button>
+                        <button class="next" @click="movePhase(1)">
+                            {{next_text}}
+                            <i v-if="phase_list[status-1].next <=3" class="far fa-arrow-right"></i>
+                        </button>
+                    </section>
+                </section>
+            </div>
+        </main>
+        <!-- footer -->
+        <footer class="site-footer">
+            <div class="footer-container">
+                <div class="footer-logo-container">
+                    <img class="logo" src="./public/images/Logo@2x.png">
+                </div>
+                <section class="footer-section">
+                    <h2 class="section-title">客戶服務</h2>
+                    <div class="section-content">
+                        <a class="page-link" href="#">運送說明</a>
+                        <a class="page-link" href="#">退換貨相關</a>
+                        <a class="page-link" href="#">付款資訊</a>
+                        <a class="page-link" href="#">FAQ</a>
+                    </div>
+                </section>
+                <section class="footer-section">
+                    <h2 class="section-title">關於我們</h2>
+                    <div class="section-content">
+                        <a class="page-link" href="#">品牌故事</a>
+                        <a class="page-link" href="#">媒體聯繫</a>
+                        <a class="page-link" href="#">Press kit</a>
+                    </div>
+                </section>
+                <section class="footer-section">
+                    <h2 class="section-title">資訊</h2>
+                    <div class="section-content">
+                        <a class="page-link" href="#">隱私權政策</a>
+                        <a class="page-link" href="#">Cookie</a>
+                        <a class="page-link" href="#">GDPR</a>
+                    </div>
+                </section>
+                <section class="footer-section">
+                    <h2 class="section-title">追蹤 ALPHA Shop</h2>
+                    <div class="section-content">
+                        <div class="tel-info">
+                            +886 02123-45678
+                        </div>
+                        <div class="social-icon-group">
+                            <i class="fab fa-facebook-f social-icon"></i>
+                            <i class="fab fa-instagram social-icon"></i>
+                            <i class="fab fa-whatsapp social-icon"></i>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+<script src="./dist/bundle.js" type="text/javascript"></script>
+</html>
